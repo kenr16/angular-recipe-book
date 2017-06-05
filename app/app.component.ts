@@ -12,14 +12,12 @@ import { Component } from '@angular/core';
 
     </ul>
     <h1 *ngIf="showing">Behold my cloaking device!</h1>
-    <h1 *ngUnless="showing">Behold my cloaking device!</h1>
   </div>
   `
 })
 
 export class AppComponent {
   showing: boolean = true;
-
   currentFocus: string = 'Angular Homework';
   currentTime = new Date();
   month: number = this.currentTime.getMonth() + 1;
