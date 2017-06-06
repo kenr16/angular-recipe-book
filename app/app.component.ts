@@ -15,7 +15,7 @@ import { Recipe } from './recipe-book';
       <h2 (click)="chooseRecipe(recipe)">{{recipe.title}}</h2>
     </div>
 
-    <button (click)="newRecipeCreate()" class='btn btn-primary'>Create New Recipe</button>
+    <button (click)="newRecipeCreate(); ingredient = null; step = null" class='btn btn-primary'>Create New Recipe</button>
 
     <button (click)="hideDetails()" class='btn btn-warning'>Hide Recipe</button>
 
@@ -84,18 +84,18 @@ export class AppComponent {
     this.selectedRecipe = recipe;
   }
 
-  newRecipeCreate() {
-    this.newRecipe = new Recipe('', [], []);
-  }
-
   hideDetails() {
     this.chosenRecipe = null;
   }
 
+  newRecipeCreate() {
+    this.newRecipe = new Recipe('', [], []);
+  }
+
   newRecipeSubmit(recipe, step, ingredient) {
-    recipe.ingredients = [ingredient];
-    recipe.directions = [step];
-    this.recipes.push(recipe);
+    ingredient ? recipe.ingredients = [ingredient] : recipe.ingredients = [];
+    step ? recipe.directions = [step] : recipe.directions = [];
+    recipe.title ? this.recipes.push(recipe) : undefined;
     this.newRecipe = null;
   }
 
@@ -108,18 +108,14 @@ export class AppComponent {
   }
 
   editRecipeSubmit(recipe, step, ingredient) {
-    if (ingredient != null) {
-      recipe.ingredients.push(ingredient);
-    }
-    if (step != null) {
-      recipe.directions.push(step);
-    }
+    ingredient ? recipe.ingredients.push(ingredient) : undefined;
+    step ? recipe.directions.push(step) : undefined;
     this.editingRecipe = false;
   }
 
   recipes: Recipe[] = [
     new Recipe('Cookies', ['Milk', 'Sugar', 'Vanilla'], ['mix', 'bake', 'serve']),
     new Recipe('Bread', ['Oats', 'Flour', 'Yeast'], ['mix', 'bake', 'serve']),
-    new Recipe('Icecream', ['Milk', 'Sugar', 'Vanilla'], ['mix', 'freeze', 'mix more', 'serve'])
+    new Recipe('Ice Cream', ['Milk', 'Sugar', 'Vanilla'], ['mix', 'freeze', 'mix more', 'serve'])
   ];
 }
