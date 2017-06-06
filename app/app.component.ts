@@ -24,7 +24,7 @@ import { Recipe } from './recipe-book';
       <h1>{{chosenRecipe.title}}</h1><button (click)="editRecipe(chosenRecipe); ingredient = null; step = null" class="btn btn-info">Edit Recipe</button>
         <h4>Ingredients Required:</h4>
         <ul>
-          <li *ngFor="let ingredient of chosenRecipe.ingredients">{{ingredient}}</li>
+          <li *ngFor="let ingredient of chosenRecipe.ingredients; let i = index" [attr.data-index]="i">{{i}}: {{ingredient}}</li>
         </ul>
         <h4>Directions for preparation:</h4>
         <ul>
