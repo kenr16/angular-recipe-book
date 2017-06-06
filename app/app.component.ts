@@ -24,7 +24,9 @@ import { Recipe } from './recipe-book';
       <h1>{{chosenRecipe.title}}</h1><button (click)="editRecipe(chosenRecipe); ingredient = null; step = null" class="btn btn-info">Edit Recipe</button>
         <h4>Ingredients Required:</h4>
         <ul>
-          <li *ngFor="let ingredient of chosenRecipe.ingredients; let i = index" [attr.data-index]="i">{{i}}: {{ingredient}}</li>
+          <div *ngFor="let ingredient of chosenRecipe.ingredients; let i = index" [attr.data-index]="i"><p>{{i}}: {{ingredient}}</p>
+            <input (pointerleave)="changedIngredient = $event.target.value; changeIngredient(chosenRecipe, i, changedIngredient)" type='text' class='form-control'>
+          </div>
         </ul>
         <h4>Directions for preparation:</h4>
         <ul>
@@ -111,6 +113,10 @@ export class AppComponent {
     ingredient ? recipe.ingredients.push(ingredient) : undefined;
     step ? recipe.directions.push(step) : undefined;
     this.editingRecipe = false;
+  }
+
+  changeIngredient(chosenRecipe, i, changedIngredient) {
+    chosenRecipe.ingredients[i] = changedIngredient;
   }
 
   recipes: Recipe[] = [
